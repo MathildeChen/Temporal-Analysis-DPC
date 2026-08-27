@@ -8,31 +8,20 @@
 
 rm(list = ls())
 
+# > Path of the project
+path_project <- "D:/Mes Donnees/CIRAD/COLLABORATIONS/2026_DPCs/"
+
+
 # LOADING NECESSARY PACKAGES----------------------------------------------------
 
 # > General data management 
 library(tidyverse) 
-
-# > Graphics
-library(cowplot)                   # add several panels in a plot
-library(ggrepel) ; library(ggtext) # deal with text 
-library(wesanderson)               # generate palettes for clustering 
 
 # > Temporal analysis 
 library(epifitter)
 
 # > functional PCA
 library(refund)  
-
-# > measures of fit quality 
-library(caret)  
-library(hydroGOF)
-library(arsenal)
-
-# -------------------------------------------
-# > Path of the project
-path_project <- "D:/Mes Donnees/CIRAD/COLLABORATIONS/2026_DPCs/"
-
 
 # LOAD DATA --------------------------------------------------------------------
 
