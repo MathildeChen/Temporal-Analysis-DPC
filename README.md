@@ -1,6 +1,6 @@
 # A framework based on functional principal component analysis for comparing disease progress curves 
 
-## Author
+## Author and affiliations
 Mathilde CHEN
 
 CIRAD, UMR PHIM, F-97130 Capesterre-Belle-Eau, Guadeloupe, France. 
