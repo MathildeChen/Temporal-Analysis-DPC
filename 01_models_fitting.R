@@ -207,7 +207,12 @@ curves_fpca_fit <- fit_fpca %>%
 
 
 # RESULTS AGGREGATION ----------------------------------------------------------
+# > Fits 
+all_fits <- list("LIN"  = fit_lin,
+                 "NLIN" = fit_nlin,
+                 "FPCA" = fit_fpca)
 
+# > Fitted curves
 all_curves_fit <- rbind(curves_fit_lin  %>% dplyr::select(-linearized),
                         curves_fit_nlin,
                         curves_fpca_fit) %>% 
@@ -215,13 +220,14 @@ all_curves_fit <- rbind(curves_fit_lin  %>% dplyr::select(-linearized),
     model %in% c("Exponential", "Monomolecular", "Logistic", "Gompertz") ~ "Linear regression based on transformed data",
     model %in% c("nlin_Monomolecular", "nlin_Logistic", "nlin_Gompertz") ~ "Non-linear regression based on untransformed data",
     model == "FPCA" ~ "FPCA approach")) %>% 
-  mutate(type = factor(type, levels = c("Linear regression based on transformed data", "Non-linear regression based on untransformed data", "FPCA" ~ "FPCA approach"))) %>% 
+  mutate(type = factor(type, levels = c("Linear regression based on transformed data", "Non-linear regression based on untransformed data", "FPCA approach"))) %>% 
   mutate(model = factor(model, 
                         levels = c("Exponential", "Monomolecular", "Logistic", "Gompertz",  "nlin_Monomolecular", "nlin_Logistic", "nlin_Gompertz",  "FPCA"),
                         labels = c("EXP", "MNM", "LOG", "GOM", "MNM", "LOG", "GOM", "FPCA")))
 
+
 # SAVE RESULTS -----------------------------------------------------------------
 
+save(all_fits, file = paste0(path_project, "/00_DATA/RESULTS/FITS.rda"))
+
 save(all_curves_fit, file = paste0(path_project, "/00_DATA/RESULTS/FITTED_CURVES.rda"))
-
-
