@@ -132,7 +132,8 @@ curves_fit_nlin <- fit_nlin %>%
     
     .x$Data
     
-  }, .id = "dataset")
+  }, .id = "dataset") %>%
+  mutate(model = paste0("nlin_", model))
 
 # -------------------------------------------
 # 3. Functional principal component analysis (FPCA)
@@ -210,9 +211,14 @@ curves_fpca_fit <- fit_fpca %>%
 all_curves_fit <- rbind(curves_fit_lin  %>% dplyr::select(-linearized),
                         curves_fit_nlin,
                         curves_fpca_fit) %>% 
+  mutate(type = case_when(
+    model %in% c("Exponential", "Monomolecular", "Logistic", "Gompertz") ~ "Linear regression based on transformed data",
+    model %in% c("nlin_Monomolecular", "nlin_Logistic", "nlin_Gompertz") ~ "Non-linear regression based on untransformed data",
+    model == "FPCA" ~ "FPCA approach")) %>% 
+  mutate(type = factor(type, levels = c("Linear regression based on transformed data", "Non-linear regression based on untransformed data", "FPCA" ~ "FPCA approach"))) %>% 
   mutate(model = factor(model, 
-                        levels = c("Exponential","Monomolecular","Logistic","Gompertz", "FPCA"),
-                        labels = c("EXP", "MNM", "LOG", "GOM", "FPCA")))
+                        levels = c("Exponential", "Monomolecular", "Logistic", "Gompertz",  "nlin_Monomolecular", "nlin_Logistic", "nlin_Gompertz",  "FPCA"),
+                        labels = c("EXP", "MNM", "LOG", "GOM", "MNM", "LOG", "GOM", "FPCA")))
 
 # SAVE RESULTS -----------------------------------------------------------------
 
